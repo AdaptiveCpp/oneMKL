@@ -43,17 +43,17 @@ if(is_dpcpp)
       set_target_properties(ONEMKL::SYCL::SYCL PROPERTIES
         INTERFACE_COMPILE_OPTIONS "${UNIX_INTERFACE_COMPILE_OPTIONS}"
         INTERFACE_LINK_OPTIONS "${UNIX_INTERFACE_LINK_OPTIONS}"
-        INTERFACE_LINK_LIBRARIES ${SYCL_LIBRARY})
+        INTERFACE_LINK_LIBRARIES $<$<NOT:${is_hipsycl}>:${SYCL_LIBRARY}>)
     else()
       set_target_properties(ONEMKL::SYCL::SYCL PROPERTIES
         INTERFACE_COMPILE_OPTIONS "-fsycl"
         INTERFACE_LINK_OPTIONS "-fsycl"
-        INTERFACE_LINK_LIBRARIES ${SYCL_LIBRARY})
-    endif()
+        INTERFACE_LINK_LIBRARIES $<$<NOT:${is_hipsycl}>:${SYCL_LIBRARY}>)
+        endif()
   else()
     set_target_properties(ONEMKL::SYCL::SYCL PROPERTIES
       INTERFACE_COMPILE_OPTIONS "-fsycl"
-      INTERFACE_LINK_LIBRARIES ${SYCL_LIBRARY})
+      INTERFACE_LINK_LIBRARIES $<$<NOT:${is_hipsycl}>:${SYCL_LIBRARY}>)
   endif()
 
 endif()

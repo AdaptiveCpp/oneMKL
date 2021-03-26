@@ -38,7 +38,10 @@ target_include_directories(${LIB_OBJ}
 )
 
 target_compile_options(${LIB_OBJ} PRIVATE ${ONEMKL_BUILD_COPT} ${MKL_COPT})
-
+if (is_hipsycl)
+  add_sycl_to_target(TARGET ${LIB_OBJ})
+  add_sycl_to_target(TARGET ${LIB_NAME})
+endif()
 target_link_libraries(${LIB_OBJ} PUBLIC ONEMKL::SYCL::SYCL ${MKL_LINK_C})
 
 set_target_properties(${LIB_OBJ} PROPERTIES

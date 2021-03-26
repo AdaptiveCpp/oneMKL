@@ -48,6 +48,9 @@ if(BUILD_SHARED_LIBS)
            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>
   )
+  if (is_hipsycl)
+    add_sycl_to_target(TARGET onemkl)
+  endif()
   set_target_properties(onemkl PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
   )

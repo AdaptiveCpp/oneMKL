@@ -31,12 +31,16 @@ target_include_directories(onemkl_blas
           ${CMAKE_BINARY_DIR}/bin
           $<TARGET_FILE_DIR:onemkl>
 )
-
 target_compile_options(onemkl_blas PRIVATE ${ONEMKL_BUILD_COPT})
 
 set_target_properties(onemkl_blas PROPERTIES
   POSITION_INDEPENDENT_CODE ON
 )
-target_link_libraries(onemkl_blas PUBLIC ONEMKL::SYCL::SYCL)
+if (is_hipsycl)
+  add_sycl_to_target(TARGET onemkl_blas)
+else()
+  target_link_libraries(onemkl_blas PUBLIC ONEMKL::SYCL::SYCL)
+endif()
+
 endif()
 

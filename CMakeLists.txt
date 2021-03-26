@@ -61,7 +61,7 @@ endif()
 if(ENABLE_MKLCPU_BACKEND
         OR ENABLE_MKLGPU_BACKEND
         OR ENABLE_CURAND_BACKEND)
-  list(APPEND DOMAINS_LIST "rng")
+  #list(APPEND DOMAINS_LIST "rng")
 endif()
 
 if(NOT TARGET_DOMAINS OR TARGET_DOMAINS STREQUAL "None")
@@ -119,6 +119,11 @@ add_subdirectory(cmake)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 # Find necessary packages
+find_package(hipSYCL CONFIG PATHS /opt/hipSYCL/lib/cmake/ REQUIRED)
+if (HIPSYCL_SYCLCC_EXTRA_ARGS)
+  set(is_hipsycl 1)
+  set(CMAKE_CXX_STANDARD 17)
+endif()
 find_package(Compiler REQUIRED)
 
 # Add source directory and output to bin/

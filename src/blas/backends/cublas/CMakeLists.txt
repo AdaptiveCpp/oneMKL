@@ -42,7 +42,10 @@ set_target_properties(${LIB_OBJ} PROPERTIES
   POSITION_INDEPENDENT_CODE ON)
 
 target_link_libraries(${LIB_NAME} PUBLIC ${LIB_OBJ})
-
+if (is_hipsycl)
+  add_sycl_to_target(TARGET ${LIB_NAME})
+  add_sycl_to_target(TARGET ${LIB_OBJ})
+endif()
 # Add major version to the library
 set_target_properties(${LIB_NAME} PROPERTIES
   SOVERSION ${PROJECT_VERSION_MAJOR}

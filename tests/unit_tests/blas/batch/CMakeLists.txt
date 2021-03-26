@@ -32,6 +32,11 @@ if(BUILD_SHARED_LIBS)
       PUBLIC ${CBLAS_INCLUDE}
   )
   target_link_libraries(blas_batch_rt PUBLIC ONEMKL::SYCL::SYCL)
+  if (is_hipsycl)
+    add_sycl_to_target(TARGET blas_batch_rt)
+  else()
+    target_link_libraries(blas_batch_rt PUBLIC ONEMKL::SYCL::SYCL)
+  endif()
 endif()
 
 add_library(blas_batch_ct OBJECT ${BATCH_SOURCES})
@@ -45,3 +50,8 @@ target_include_directories(blas_batch_ct
     PUBLIC ${CBLAS_INCLUDE}
 )
 target_link_libraries(blas_batch_ct PUBLIC ONEMKL::SYCL::SYCL)
+if (is_hipsycl)
+  add_sycl_to_target(TARGET blas_batch_ct)
+else()
+  target_link_libraries(blas_batch_ct PUBLIC ONEMKL::SYCL::SYCL)
+endif()
