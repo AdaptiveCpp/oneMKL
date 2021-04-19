@@ -30,7 +30,7 @@ if(BUILD_SHARED_LIBS)
       PUBLIC ${PROJECT_SOURCE_DIR}/deps/googletest/include
       PUBLIC ${CMAKE_BINARY_DIR}/bin
   )
-  if (is_hipsycl)
+  if (USE_HIPSYCL)
     add_sycl_to_target(TARGET rng_statistics_rt)
   else()
     target_link_libraries(rng_statistics_rt PUBLIC ONEMKL::SYCL::SYCL)
@@ -46,7 +46,7 @@ target_include_directories(rng_statistics_ct
     PUBLIC ${PROJECT_SOURCE_DIR}/deps/googletest/include
     PUBLIC ${CMAKE_BINARY_DIR}/bin
 )
-if (is_hipsycl)
+if (USE_HIPSYCL)
   add_sycl_to_target(TARGET rng_statistics_ct)
 else()
   target_link_libraries(rng_statistics_ct PUBLIC ONEMKL::SYCL::SYCL)

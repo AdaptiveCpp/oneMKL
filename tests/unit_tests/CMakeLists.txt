@@ -109,7 +109,7 @@ foreach(domain ${TARGET_DOMAINS})
       ONEMKL::SYCL::SYCL
       ${${domain}_TEST_LIST_CT}
   )
-  if (is_hipsycl)
+  if (USE_HIPSYCL)
     add_sycl_to_target(TARGET test_main_${domain}_ct)
   endif()
   string(TOUPPER ${domain} DOMAIN_PREFIX)
@@ -132,7 +132,7 @@ foreach(domain ${TARGET_DOMAINS})
     PROPERTIES TEST_PREFIX ${DOMAIN_PREFIX}/CT/
     DISCOVERY_TIMEOUT 30
   )
-  if (is_hipsycl)
+  if (USE_HIPSYCL)
     add_sycl_to_target(TARGET test_main_${domain}_rt)
   endif()
 

@@ -32,7 +32,7 @@ if(BUILD_SHARED_LIBS)
       PUBLIC ${CBLAS_INCLUDE}
   )
   target_link_libraries(blas_extensions_rt PUBLIC ONEMKL::SYCL::SYCL)
-  if (is_hipsycl)
+  if (USE_HIPSYCL)
     add_sycl_to_target(TARGET blas_extensions_rt)
   else()
     target_link_libraries(blas_extensions_rt PUBLIC ONEMKL::SYCL::SYCL)
@@ -50,7 +50,7 @@ target_include_directories(blas_extensions_ct
     PUBLIC ${CBLAS_INCLUDE}
 )
 target_link_libraries(blas_extensions_ct PUBLIC ONEMKL::SYCL::SYCL)
-if (is_hipsycl)
+if (USE_HIPSYCL)
   add_sycl_to_target(TARGET blas_extensions_ct)
 else()
   target_link_libraries(blas_extensions_ct PUBLIC ONEMKL::SYCL::SYCL)

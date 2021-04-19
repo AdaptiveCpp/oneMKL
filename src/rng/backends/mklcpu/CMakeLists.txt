@@ -38,7 +38,7 @@ target_include_directories(${LIB_OBJ}
 )
 
 target_compile_options(${LIB_OBJ} PRIVATE ${ONEMKL_BUILD_COPT} ${MKL_COPT})
-if (is_hipsycl)
+if (USE_HIPSYCL)
   add_sycl_to_target(TARGET ${LIB_OBJ})
   add_sycl_to_target(TARGET ${LIB_NAME})
 endif()

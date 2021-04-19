@@ -49,6 +49,7 @@ endif()
 option(ENABLE_CUBLAS_BACKEND "" OFF)
 option(ENABLE_CURAND_BACKEND "" OFF)
 option(ENABLE_NETLIB_BACKEND "" OFF)
+option(USE_HIPSYCL "Use hipSYCL instead of dpc++" OFF)
 
 ## Domains
 set(DOMAINS_LIST "")
@@ -58,10 +59,11 @@ if(ENABLE_MKLCPU_BACKEND
         OR ENABLE_NETLIB_BACKEND)
   list(APPEND DOMAINS_LIST "blas")
 endif()
-if(ENABLE_MKLCPU_BACKEND
+if((ENABLE_MKLCPU_BACKEND
         OR ENABLE_MKLGPU_BACKEND
         OR ENABLE_CURAND_BACKEND)
-  #list(APPEND DOMAINS_LIST "rng")
+        AND NOT USE_HIPSYCL)
+  list(APPEND DOMAINS_LIST "rng")
 endif()
 
 if(NOT TARGET_DOMAINS OR TARGET_DOMAINS STREQUAL "None")
@@ -119,12 +121,15 @@ add_subdirectory(cmake)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 # Find necessary packages
-find_package(hipSYCL CONFIG PATHS /opt/hipSYCL/lib/cmake/ REQUIRED)
-if (HIPSYCL_SYCLCC_EXTRA_ARGS)
-  set(is_hipsycl 1)
+if (USE_HIPSYCL)
+  message("Looking for hipSYCL")
+  find_package(hipSYCL CONFIG PATHS /opt/hipSYCL/lib/cmake/ REQUIRED)
   set(CMAKE_CXX_STANDARD 17)
+  add_library(ONEMKL::SYCL::SYCL INTERFACE IMPORTED)
+else()
+  message("Looking for dpc++")
+  find_package(Compiler REQUIRED)
 endif()
-find_package(Compiler REQUIRED)
 
 # Add source directory and output to bin/
 add_subdirectory(src bin)

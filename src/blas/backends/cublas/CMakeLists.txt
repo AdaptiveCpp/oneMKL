@@ -42,7 +42,7 @@ set_target_properties(${LIB_OBJ} PROPERTIES
   POSITION_INDEPENDENT_CODE ON)
 
 target_link_libraries(${LIB_NAME} PUBLIC ${LIB_OBJ})
-if (is_hipsycl)
+if (USE_HIPSYCL)
   add_sycl_to_target(TARGET ${LIB_NAME})
   add_sycl_to_target(TARGET ${LIB_OBJ})
 endif()
