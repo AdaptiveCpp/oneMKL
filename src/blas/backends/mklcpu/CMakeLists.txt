@@ -28,7 +28,7 @@ add_library(${LIB_OBJ} OBJECT
   mklcpu_level1.cpp mklcpu_level2.cpp mklcpu_level3.cpp mklcpu_batch.cpp mklcpu_extensions.cpp
   $<$<BOOL:${BUILD_SHARED_LIBS}>: mklcpu_wrappers.cpp>
 )
-if (USE_HIPSYCL)
+if (USE_ADD_SYCL_TO_TARGET_INTEGRATION)
   add_sycl_to_target(TARGET ${LIB_NAME})
   add_sycl_to_target(TARGET ${LIB_OBJ})
 endif()

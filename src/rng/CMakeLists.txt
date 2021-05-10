@@ -37,7 +37,7 @@ target_compile_options(onemkl_rng PRIVATE ${ONEMKL_BUILD_COPT})
 set_target_properties(onemkl_rng PROPERTIES
   POSITION_INDEPENDENT_CODE ON
 )
-if (USE_HIPSYCL)
+if (USE_ADD_SYCL_TO_TARGET_INTEGRATION)
   add_sycl_to_target(TARGET onemkl_rng)
 else()
   target_link_libraries(onemkl_rng PUBLIC ONEMKL::SYCL::SYCL)

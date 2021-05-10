@@ -31,7 +31,7 @@ if(BUILD_SHARED_LIBS)
       PUBLIC ${CMAKE_BINARY_DIR}/bin
       PUBLIC ${CBLAS_INCLUDE}
   )
-  if (USE_HIPSYCL)
+  if (USE_ADD_SYCL_TO_TARGET_INTEGRATION)
     add_sycl_to_target(TARGET blas_level1_rt)
   else()
     target_link_libraries(blas_level1_rt PUBLIC ONEMKL::SYCL::SYCL)
@@ -49,7 +49,7 @@ target_include_directories(blas_level1_ct
     PUBLIC ${CMAKE_BINARY_DIR}/bin
     PUBLIC ${CBLAS_INCLUDE}
 )
-if (USE_HIPSYCL)
+if (USE_ADD_SYCL_TO_TARGET_INTEGRATION)
   add_sycl_to_target(TARGET blas_level1_ct)
 else()
   target_link_libraries(blas_level1_ct PUBLIC ONEMKL::SYCL::SYCL)

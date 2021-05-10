@@ -30,7 +30,7 @@ if(BUILD_SHARED_LIBS)
       PUBLIC ${PROJECT_SOURCE_DIR}/deps/googletest/include
       PUBLIC ${CMAKE_BINARY_DIR}/bin
   )
-  if (USE_HIPSYCL)
+  if (USE_ADD_SYCL_TO_TARGET_INTEGRATION)
     add_sycl_to_target(TARGET rng_service_rt)
   else()
     target_link_libraries(rng_service_rt PUBLIC ONEMKL::SYCL::SYCL)
@@ -47,7 +47,7 @@ target_include_directories(rng_service_ct
     PUBLIC ${CMAKE_BINARY_DIR}/bin
 )
 target_link_libraries(rng_service_ct PUBLIC ONEMKL::SYCL::SYCL)
-if (USE_HIPSYCL)
+if (USE_ADD_SYCL_TO_TARGET_INTEGRATION)
   add_sycl_to_target(TARGET rng_service_ct)
 else()
   target_link_libraries(rng_service_ct PUBLIC ONEMKL::SYCL::SYCL)
