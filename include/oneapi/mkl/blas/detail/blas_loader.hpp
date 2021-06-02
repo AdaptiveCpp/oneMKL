@@ -24,6 +24,7 @@
 #include <cstdint>
 #include <CL/sycl.hpp>
 
+#include "oneapi/mkl/detail/config.hpp"
 #include "oneapi/mkl/types.hpp"
 
 #include "oneapi/mkl/detail/export.hpp"

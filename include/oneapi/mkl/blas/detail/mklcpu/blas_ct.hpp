@@ -25,6 +25,7 @@
 #include <cstdint>
 
 #include "oneapi/mkl/types.hpp"
+#include "oneapi/mkl/detail/config.hpp"
 #include "oneapi/mkl/detail/backend_selector.hpp"
 
 #include "oneapi/mkl/blas/detail/blas_ct_backends.hpp"
