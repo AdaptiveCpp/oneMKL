@@ -1,0 +1,290 @@
+#include "rocblas_helper.hpp"
+#include "rocblas_task.hpp"
+#include "oneapi/mkl/blas/detail/rocblas/onemkl_blas_rocblas.hpp"
+namespace rocblas {
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+            rocblasSetPointerMode(handle, rocblas_pointer_mode_host);
+ASUM_LAUNCHER(float, float, rocblasSasum)
+ASUM_LAUNCHER(double, double, rocblasDasum)
+ASUM_LAUNCHER(std::complex<float>, float, rocblasScasum)
+ASUM_LAUNCHER(std::complex<double>, double, rocblasDzasum)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+SCAL_LAUNCHER(float, float, rocblasSscal)
+SCAL_LAUNCHER(double, double, rocblasDscal)
+SCAL_LAUNCHER(std::complex<float>, std::complex<float>, rocblasCscal)
+SCAL_LAUNCHER(std::complex<double>, std::complex<double>, rocblasZscal)
+SCAL_LAUNCHER(float, std::complex<float>, rocblasCsscal)
+SCAL_LAUNCHER(double, std::complex<double>, rocblasZdscal)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+AXPY_LAUNCHER(float, rocblasSaxpy)
+AXPY_LAUNCHER(double, rocblasDaxpy)
+AXPY_LAUNCHER(std::complex<float>, rocblasCaxpy)
+AXPY_LAUNCHER(std::complex<double>, rocblasZaxpy)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+            rocblasSetPointerMode(handle, rocblas_pointer_mode_host);
+ROTG_LAUNCHER(float, float, rocblasSrotg)
+ROTG_LAUNCHER(double, double, rocblasDrotg)
+ROTG_LAUNCHER(std::complex<float>, float, rocblasCrotg)
+ROTG_LAUNCHER(std::complex<double>, double, rocblasZrotg)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+            rocblasSetPointerMode(handle, rocblas_pointer_mode_host);
+ROTM_LAUNCHER(float, rocblasSrotm)
+ROTM_LAUNCHER(double, rocblasDrotm)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+COPY_LAUNCHER(float, rocblasScopy)
+COPY_LAUNCHER(double, rocblasDcopy)
+COPY_LAUNCHER(std::complex<float>, rocblasCcopy)
+COPY_LAUNCHER(std::complex<double>, rocblasZcopy)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+            rocblasSetPointerMode(handle, rocblas_pointer_mode_host);
+DOT_LAUNCHER(, float, rocblasSdot)
+DOT_LAUNCHER(, double, rocblasDdot)
+DOT_LAUNCHER(c, std::complex<float>, rocblasCdotc)
+DOT_LAUNCHER(c, std::complex<double>, rocblasZdotc)
+DOT_LAUNCHER(u, std::complex<float>, rocblasCdotu)
+DOT_LAUNCHER(u, std::complex<double>, rocblasZdotu)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            // rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+ROT_LAUNCHER(float, float, float, rocblasSrot)
+ROT_LAUNCHER(double, double, double, rocblasDrot)
+ROT_LAUNCHER(std::complex<float>, float, float, rocblasCsrot)
+ROT_LAUNCHER(std::complex<double>, double, double, rocblasZdrot)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+            ROCBLAS_ERROR_FUNC(rocblasSdot, err, handle, n, x_, incx, y_, incy, res_);
+            rocblasSetPointerMode(handle, rocblas_pointer_mode_host);
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+            rocblasSetPointerMode(handle, rocblas_pointer_mode_host);
+ROTMG_LAUNCHER(float, rocblasSrotmg)
+ROTMG_LAUNCHER(double, rocblasDrotmg)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+            rocblasSetPointerMode(handle, rocblas_pointer_mode_host);
+IAMAX_LAUNCHER(float, rocblasIsamax)
+IAMAX_LAUNCHER(double, rocblasIdamax)
+IAMAX_LAUNCHER(std::complex<float>, rocblasIcamax)
+IAMAX_LAUNCHER(std::complex<double>, rocblasIzamax)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+SWAP_LAUNCHER(float, rocblasSswap)
+SWAP_LAUNCHER(double, rocblasDswap)
+SWAP_LAUNCHER(std::complex<float>, rocblasCswap)
+SWAP_LAUNCHER(std::complex<double>, rocblasZswap)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+            rocblasSetPointerMode(handle, rocblas_pointer_mode_host);
+IAMIN_LAUNCHER(float, rocblasIsamin)
+IAMIN_LAUNCHER(double, rocblasIdamin)
+IAMIN_LAUNCHER(std::complex<float>, rocblasIcamin)
+IAMIN_LAUNCHER(std::complex<double>, rocblasIzamin)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblasSetPointerMode(handle, rocblas_set_pointer_mode);
+            rocblas_status err;
+            rocblasSetPointerMode(handle, rocblas_pointer_mode_host);
+NRM2_LAUNCHER(float, float, rocblasSnrm2)
+NRM2_LAUNCHER(double, double, rocblasDnrm2)
+NRM2_LAUNCHER(std::complex<float>, float, rocblasScnrm2)
+NRM2_LAUNCHER(std::complex<double>, double, rocblasDznrm2)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+ASUM_LAUNCHER_USM(float, float, rocblasSasum)
+ASUM_LAUNCHER_USM(double, double, rocblasDasum)
+ASUM_LAUNCHER_USM(std::complex<float>, float, rocblasScasum)
+ASUM_LAUNCHER_USM(std::complex<double>, double, rocblasDzasum)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+SCAL_LAUNCHER_USM(float, float, rocblasSscal)
+SCAL_LAUNCHER_USM(double, double, rocblasDscal)
+SCAL_LAUNCHER_USM(std::complex<float>, std::complex<float>, rocblasCscal)
+SCAL_LAUNCHER_USM(std::complex<double>, std::complex<double>, rocblasZscal)
+SCAL_LAUNCHER_USM(float, std::complex<float>, rocblasCsscal)
+SCAL_LAUNCHER_USM(double, std::complex<double>, rocblasZdscal)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+AXPY_LAUNCHER_USM(float, rocblasSaxpy)
+AXPY_LAUNCHER_USM(double, rocblasDaxpy)
+AXPY_LAUNCHER_USM(std::complex<float>, rocblasCaxpy)
+AXPY_LAUNCHER_USM(std::complex<double>, rocblasZaxpy)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+ROTG_LAUNCHER_USM(float, float, rocblasSrotg)
+ROTG_LAUNCHER_USM(double, double, rocblasDrotg)
+ROTG_LAUNCHER_USM(std::complex<float>, float, rocblasCrotg)
+ROTG_LAUNCHER_USM(std::complex<double>, double, rocblasZrotg)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+ROTM_LAUNCHER_USM(float, rocblasSrotm)
+ROTM_LAUNCHER_USM(double, rocblasDrotm)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+COPY_LAUNCHER_USM(float, rocblasScopy)
+COPY_LAUNCHER_USM(double, rocblasDcopy)
+COPY_LAUNCHER_USM(std::complex<float>, rocblasCcopy)
+COPY_LAUNCHER_USM(std::complex<double>, rocblasZcopy)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+DOT_LAUNCHER_USM(, float, rocblasSdot)
+DOT_LAUNCHER_USM(, double, rocblasDdot)
+DOT_LAUNCHER_USM(c, std::complex<float>, rocblasCdotc)
+DOT_LAUNCHER_USM(c, std::complex<double>, rocblasZdotc)
+DOT_LAUNCHER_USM(u, std::complex<float>, rocblasCdotu)
+DOT_LAUNCHER_USM(u, std::complex<double>, rocblasZdotu)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+ROT_LAUNCHER_USM(float, float, float, rocblasSrot)
+ROT_LAUNCHER_USM(double, double, double, rocblasDrot)
+ROT_LAUNCHER_USM(std::complex<float>, float, float, rocblasCsrot)
+ROT_LAUNCHER_USM(std::complex<double>, double, double, rocblasZdrot)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+            ROCBLAS_ERROR_FUNC(rocblasSdot, err, handle, n, x_, incx, y_, incy, res_);
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+ROTMG_LAUNCHER_USM(float, rocblasSrotmg)
+ROTMG_LAUNCHER_USM(double, rocblasDrotmg)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+IAMAX_LAUNCHER_USM(float, rocblasIsamax)
+IAMAX_LAUNCHER_USM(double, rocblasIdamax)
+IAMAX_LAUNCHER_USM(std::complex<float>, rocblasIcamax)
+IAMAX_LAUNCHER_USM(std::complex<double>, rocblasIzamax)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+SWAP_LAUNCHER_USM(float, rocblasSswap)
+SWAP_LAUNCHER_USM(double, rocblasDswap)
+SWAP_LAUNCHER_USM(std::complex<float>, rocblasCswap)
+SWAP_LAUNCHER_USM(std::complex<double>, rocblasZswap)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+IAMIN_LAUNCHER_USM(float, rocblasIsamin)
+IAMIN_LAUNCHER_USM(double, rocblasIdamin)
+IAMIN_LAUNCHER_USM(std::complex<float>, rocblasIcamin)
+IAMIN_LAUNCHER_USM(std::complex<double>, rocblasIzamin)
+        onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
+            rocblas_status err;
+NRM2_LAUNCHER_USM(float, float, rocblasSnrm2)
+NRM2_LAUNCHER_USM(double, double, rocblasDnrm2)
+NRM2_LAUNCHER_USM(std::complex<float>, float, rocblasScnrm2)
+NRM2_LAUNCHER_USM(std::complex<double>, double, rocblasDznrm2)
+ASUM_LAUNCHER(float, float, rocblasSasum)
+ASUM_LAUNCHER(double, double, rocblasDasum)
+ASUM_LAUNCHER(std::complex<float>, float, rocblasScasum)
+ASUM_LAUNCHER(std::complex<double>, double, rocblasDzasum)
+SCAL_LAUNCHER(float, float, rocblasSscal)
+SCAL_LAUNCHER(double, double, rocblasDscal)
+SCAL_LAUNCHER(std::complex<float>, std::complex<float>, rocblasCscal)
+SCAL_LAUNCHER(std::complex<double>, std::complex<double>, rocblasZscal)
+SCAL_LAUNCHER(float, std::complex<float>, rocblasCsscal)
+SCAL_LAUNCHER(double, std::complex<double>, rocblasZdscal)
+AXPY_LAUNCHER(float, rocblasSaxpy)
+AXPY_LAUNCHER(double, rocblasDaxpy)
+AXPY_LAUNCHER(std::complex<float>, rocblasCaxpy)
+AXPY_LAUNCHER(std::complex<double>, rocblasZaxpy)
+ROTG_LAUNCHER(float, float, rocblasSrotg)
+ROTG_LAUNCHER(double, double, rocblasDrotg)
+ROTG_LAUNCHER(std::complex<float>, float, rocblasCrotg)
+ROTG_LAUNCHER(std::complex<double>, double, rocblasZrotg)
+ROTM_LAUNCHER(float, rocblasSrotm)
+ROTM_LAUNCHER(double, rocblasDrotm)
+COPY_LAUNCHER(float, rocblasScopy)
+COPY_LAUNCHER(double, rocblasDcopy)
+COPY_LAUNCHER(std::complex<float>, rocblasCcopy)
+COPY_LAUNCHER(std::complex<double>, rocblasZcopy)
+DOT_LAUNCHER(, float, rocblasSdot)
+DOT_LAUNCHER(, double, rocblasDdot)
+DOT_LAUNCHER(c, std::complex<float>, rocblasCdotc)
+DOT_LAUNCHER(c, std::complex<double>, rocblasZdotc)
+DOT_LAUNCHER(u, std::complex<float>, rocblasCdotu)
+DOT_LAUNCHER(u, std::complex<double>, rocblasZdotu)
+ROT_LAUNCHER(float, float, float, rocblasSrot)
+ROT_LAUNCHER(double, double, double, rocblasDrot)
+ROT_LAUNCHER(std::complex<float>, float, float, rocblasCsrot)
+ROT_LAUNCHER(std::complex<double>, double, double, rocblasZdrot)
+ROTMG_LAUNCHER(float, rocblasSrotmg)
+ROTMG_LAUNCHER(double, rocblasDrotmg)
+IAMAX_LAUNCHER(float, rocblasIsamax)
+IAMAX_LAUNCHER(double, rocblasIdamax)
+IAMAX_LAUNCHER(std::complex<float>, rocblasIcamax)
+IAMAX_LAUNCHER(std::complex<double>, rocblasIzamax)
+SWAP_LAUNCHER(float, rocblasSswap)
+SWAP_LAUNCHER(double, rocblasDswap)
+SWAP_LAUNCHER(std::complex<float>, rocblasCswap)
+SWAP_LAUNCHER(std::complex<double>, rocblasZswap)
+IAMIN_LAUNCHER(float, rocblasIsamin)
+IAMIN_LAUNCHER(double, rocblasIdamin)
+IAMIN_LAUNCHER(std::complex<float>, rocblasIcamin)
+IAMIN_LAUNCHER(std::complex<double>, rocblasIzamin)
+NRM2_LAUNCHER(float, float, rocblasSnrm2)
+NRM2_LAUNCHER(double, double, rocblasDnrm2)
+NRM2_LAUNCHER(std::complex<float>, float, rocblasScnrm2)
+NRM2_LAUNCHER(std::complex<double>, double, rocblasDznrm2)
+ASUM_LAUNCHER_USM(float, float, rocblasSasum)
+ASUM_LAUNCHER_USM(double, double, rocblasDasum)
+ASUM_LAUNCHER_USM(std::complex<float>, float, rocblasScasum)
+ASUM_LAUNCHER_USM(std::complex<double>, double, rocblasDzasum)
+SCAL_LAUNCHER_USM(float, float, rocblasSscal)
+SCAL_LAUNCHER_USM(double, double, rocblasDscal)
+SCAL_LAUNCHER_USM(std::complex<float>, std::complex<float>, rocblasCscal)
+SCAL_LAUNCHER_USM(std::complex<double>, std::complex<double>, rocblasZscal)
+SCAL_LAUNCHER_USM(float, std::complex<float>, rocblasCsscal)
+SCAL_LAUNCHER_USM(double, std::complex<double>, rocblasZdscal)
+AXPY_LAUNCHER_USM(float, rocblasSaxpy)
+AXPY_LAUNCHER_USM(double, rocblasDaxpy)
+AXPY_LAUNCHER_USM(std::complex<float>, rocblasCaxpy)
+AXPY_LAUNCHER_USM(std::complex<double>, rocblasZaxpy)
+ROTG_LAUNCHER_USM(float, float, rocblasSrotg)
+ROTG_LAUNCHER_USM(double, double, rocblasDrotg)
+ROTG_LAUNCHER_USM(std::complex<float>, float, rocblasCrotg)
+ROTG_LAUNCHER_USM(std::complex<double>, double, rocblasZrotg)
+ROTM_LAUNCHER_USM(float, rocblasSrotm)
+ROTM_LAUNCHER_USM(double, rocblasDrotm)
+COPY_LAUNCHER_USM(float, rocblasScopy)
+COPY_LAUNCHER_USM(double, rocblasDcopy)
+COPY_LAUNCHER_USM(std::complex<float>, rocblasCcopy)
+COPY_LAUNCHER_USM(std::complex<double>, rocblasZcopy)
+DOT_LAUNCHER_USM(, float, rocblasSdot)
+DOT_LAUNCHER_USM(, double, rocblasDdot)
+DOT_LAUNCHER_USM(c, std::complex<float>, rocblasCdotc)
+DOT_LAUNCHER_USM(c, std::complex<double>, rocblasZdotc)
+DOT_LAUNCHER_USM(u, std::complex<float>, rocblasCdotu)
+DOT_LAUNCHER_USM(u, std::complex<double>, rocblasZdotu)
+ROT_LAUNCHER_USM(float, float, float, rocblasSrot)
+ROT_LAUNCHER_USM(double, double, double, rocblasDrot)
+ROT_LAUNCHER_USM(std::complex<float>, float, float, rocblasCsrot)
+ROT_LAUNCHER_USM(std::complex<double>, double, double, rocblasZdrot)
+ROTMG_LAUNCHER_USM(float, rocblasSrotmg)
+ROTMG_LAUNCHER_USM(double, rocblasDrotmg)
+IAMAX_LAUNCHER_USM(float, rocblasIsamax)
+IAMAX_LAUNCHER_USM(double, rocblasIdamax)
+IAMAX_LAUNCHER_USM(std::complex<float>, rocblasIcamax)
+IAMAX_LAUNCHER_USM(std::complex<double>, rocblasIzamax)
+SWAP_LAUNCHER_USM(float, rocblasSswap)
+SWAP_LAUNCHER_USM(double, rocblasDswap)
+SWAP_LAUNCHER_USM(std::complex<float>, rocblasCswap)
+SWAP_LAUNCHER_USM(std::complex<double>, rocblasZswap)
+IAMIN_LAUNCHER_USM(float, rocblasIsamin)
+IAMIN_LAUNCHER_USM(double, rocblasIdamin)
+IAMIN_LAUNCHER_USM(std::complex<float>, rocblasIcamin)
+IAMIN_LAUNCHER_USM(std::complex<double>, rocblasIzamin)
+NRM2_LAUNCHER_USM(float, float, rocblasSnrm2)
+NRM2_LAUNCHER_USM(double, double, rocblasDnrm2)
+NRM2_LAUNCHER_USM(std::complex<float>, float, rocblasScnrm2)
+NRM2_LAUNCHER_USM(std::complex<double>, double, rocblasDznrm2)
+} // namespace rocblas
