@@ -98,9 +98,11 @@ void gemm(cl::sycl::queue &queue, transpose transa, transpose transb, int64_t m,
 }
 
 void gemm(cl::sycl::queue &queue, transpose transa, transpose transb, int64_t m, int64_t n,
-          int64_t k, half alpha, cl::sycl::buffer<half, 1> &a, int64_t lda,
-          cl::sycl::buffer<half, 1> &b, int64_t ldb, half beta, cl::sycl::buffer<half, 1> &c,
-          int64_t ldc) {
+          int64_t k, cl::sycl::half alpha, cl::sycl::buffer<cl::sycl::half, 1> &a, int64_t lda,
+          cl::sycl::buffer<cl::sycl::half, 1> &b, int64_t ldb, cl::sycl::half beta,
+          cl::sycl::buffer<cl::sycl::half, 1> &c, int64_t ldc) {
+#ifdef ENABLE_HALF_ROUTINES
+
     auto a_fp16 = a.reinterpret<fp16, 1>(a.get_range());
     auto b_fp16 = b.reinterpret<fp16, 1>(b.get_range());
     auto c_fp16 = c.reinterpret<fp16, 1>(c.get_range());
@@ -131,7 +133,7 @@ void gemm(cl::sycl::queue &queue, transpose transa, transpose transb, int64_t m,
             copy_mat(accessor_c, MKLMAJOR, transpose::N, m, n, ldc, 0.0f, f32_c);
             ::cblas_sgemm(CBLASMAJOR, transa_, transb_, m, n, k, f32_alpha, f32_a, lda, f32_b, ldb,
                           f32_beta, f32_c, ldc);
-            // copy C back to half
+            // copy C back to cl::sycl::half
             fp16 co = 0.0f;
             copy_mat(f32_c, MKLMAJOR, m, n, ldc, offset::F, &co, accessor_c);
             ::free(f32_a);
@@ -139,12 +141,17 @@ void gemm(cl::sycl::queue &queue, transpose transa, transpose transb, int64_t m,
             ::free(f32_c);
         });
     });
+#else
+    throw oneapi::mkl::unimplemented("blas", "gemm", "half is disabled");
+#endif
 }
 
 void gemm(cl::sycl::queue &queue, transpose transa, transpose transb, int64_t m, int64_t n,
-          int64_t k, float alpha, cl::sycl::buffer<half, 1> &a, int64_t lda,
-          cl::sycl::buffer<half, 1> &b, int64_t ldb, float beta, cl::sycl::buffer<float, 1> &c,
-          int64_t ldc) {
+          int64_t k, float alpha, cl::sycl::buffer<cl::sycl::half, 1> &a, int64_t lda,
+          cl::sycl::buffer<cl::sycl::half, 1> &b, int64_t ldb, float beta,
+          cl::sycl::buffer<float, 1> &c, int64_t ldc) {
+#ifdef ENABLE_HALF_ROUTINES
+
     auto a_fp16 = a.reinterpret<fp16, 1>(a.get_range());
     auto b_fp16 = b.reinterpret<fp16, 1>(b.get_range());
     queue.submit([&](cl::sycl::handler &cgh) {
@@ -172,6 +179,9 @@ void gemm(cl::sycl::queue &queue, transpose transa, transpose transb, int64_t m,
             ::free(f32_b);
         });
     });
+#else
+    throw oneapi::mkl::unimplemented("blas", "cl::sycl::half", "when using hipSYCL");
+#endif
 }
 
 void hemm(cl::sycl::queue &queue, side left_right, uplo upper_lower, int64_t m, int64_t n,
