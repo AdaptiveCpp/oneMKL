@@ -73,6 +73,15 @@
 #else
 #define TEST_RUN_NVIDIAGPU_CUBLAS_SELECT(q, func, ...)
 #endif
+
+#ifdef ENABLE_ROCBLAS_BACKEND
+#define TEST_RUN_AMDGPU_ROCBLAS_SELECT(q, func, ...) \
+    func(oneapi::mkl::backend_selector<oneapi::mkl::backend::rocblas>{ q }, __VA_ARGS__)
+#else
+#define TEST_RUN_AMDGPU_ROCBLAS_SELECT(q, func, ...)
+#endif
+
+
 #ifdef ENABLE_CURAND_BACKEND
 #define TEST_RUN_NVIDIAGPU_CURAND_SELECT(q, func, ...) \
     func(oneapi::mkl::backend_selector<oneapi::mkl::backend::curand>{ q }, __VA_ARGS__)
@@ -92,6 +101,8 @@
             else if (vendor_id == NVIDIA_ID) {                                 \
                 TEST_RUN_NVIDIAGPU_CUBLAS_SELECT(q, func, __VA_ARGS__);        \
                 TEST_RUN_NVIDIAGPU_CURAND_SELECT(q, func, __VA_ARGS__);        \
+            } else if (vendor_id == AMD_ID) {                                  \
+                TEST_RUN_AMDGPU_ROCBLAS_SELECT(q, func, __VA_ARGS__);          \
             }                                                                  \
         }                                                                      \
     } while (0);
@@ -152,9 +163,10 @@ static inline void *malloc_shared(size_t align, size_t size, cl::sycl::device de
 #ifdef _WIN64
     return cl::sycl::malloc_shared(size, dev, ctx);
 #else
-#ifdef ENABLE_CUBLAS_BACKEND
+#if defined(ENABLE_CUBLAS_BACKEND) || defined(ENABLE_ROCBLAS_BACKEND)
     return cl::sycl::aligned_alloc_shared(align, size, dev, ctx);
-#else
+#endif
+#if  !defined(ENABLE_CUBLAS_BACKEND) && !defined(ENABLE_ROCBLAS_BACKEND)
     return cl::sycl::malloc_shared(size, dev, ctx);
 #endif
 #endif
