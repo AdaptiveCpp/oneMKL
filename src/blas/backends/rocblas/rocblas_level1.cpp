@@ -626,12 +626,14 @@ inline cl::sycl::event asum(Func func, cl::sycl::queue &queue, int64_t n, const 
         }
         onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
             auto handle = sc.get_handle(queue);
+            rocblas_set_pointer_mode(handle, rocblas_pointer_mode_device);
 
             auto x_ = reinterpret_cast<const cuDataType1 *>(x);
             auto res_ = reinterpret_cast<cuDataType2 *>(result);
             rocblas_status err;
             // ASUM does not support negative index
             ROCBLAS_ERROR_FUNC(func, err, handle, n, x_, std::abs(incx), res_);
+            rocblas_set_pointer_mode(handle, rocblas_pointer_mode_host);
         });
     });
     return done;
@@ -982,8 +984,8 @@ inline cl::sycl::event iamax(Func func, cl::sycl::queue &queue, int64_t n, const
     // it back to the actual data on the host.
     // This change may cause failure as the result of integer overflow
     // based on the size.
-    int int_res = 0;
-    int *int_res_p = &int_res;
+    auto int_res_p =  (int *)cl::sycl::aligned_alloc_shared(64, sizeof(rocblas_int), queue.get_device(), queue.get_context());
+    *int_res_p = 0;
     auto done = queue.submit([&](cl::sycl::handler &cgh) {
         int64_t num_events = dependencies.size();
         for (int64_t i = 0; i < num_events; i++) {
@@ -991,13 +993,14 @@ inline cl::sycl::event iamax(Func func, cl::sycl::queue &queue, int64_t n, const
         }
         onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
             auto handle = sc.get_handle(queue);
-
+            rocblas_set_pointer_mode(handle, rocblas_pointer_mode_device);
             auto x_ = reinterpret_cast<const cuDataType *>(x);
             auto int_res_p_ = reinterpret_cast<int *>(int_res_p);
             rocblas_status err;
             // For negative incx, iamax returns 0. This behaviour is similar to that of
             // reference iamax.
             ROCBLAS_ERROR_FUNC(func, err, handle, n, x_, incx, int_res_p_);
+            rocblas_set_pointer_mode(handle, rocblas_pointer_mode_host);
         });
     });
     done.wait();
@@ -1064,8 +1067,8 @@ inline cl::sycl::event iamin(Func func, cl::sycl::queue &queue, int64_t n, const
     // it back to the actual data on the host.
     // This change may cause failure as the result of integer overflow
     // based on the size.
-    int int_res = 0;
-    int *int_res_p = &int_res;
+    auto int_res_p =  (int *)cl::sycl::aligned_alloc_shared(64, sizeof(rocblas_int), queue.get_device(), queue.get_context());
+    *int_res_p = 0;
     auto done = queue.submit([&](cl::sycl::handler &cgh) {
         int64_t num_events = dependencies.size();
         for (int64_t i = 0; i < num_events; i++) {
@@ -1073,6 +1076,7 @@ inline cl::sycl::event iamin(Func func, cl::sycl::queue &queue, int64_t n, const
         }
         onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
             auto handle = sc.get_handle(queue);
+            rocblas_set_pointer_mode(handle, rocblas_pointer_mode_device);
 
             auto x_ = reinterpret_cast<const cuDataType *>(x);
             auto int_res_p_ = reinterpret_cast<int *>(int_res_p);
@@ -1080,6 +1084,7 @@ inline cl::sycl::event iamin(Func func, cl::sycl::queue &queue, int64_t n, const
             // For negative incx, iamin returns 0. This behaviour is similar to that of
             // implemented iamin.
             ROCBLAS_ERROR_FUNC(func, err, handle, n, x_, incx, int_res_p_);
+            rocblas_set_pointer_mode(handle, rocblas_pointer_mode_host);
         });
     });
     done.wait();
@@ -1114,12 +1119,14 @@ inline cl::sycl::event nrm2(Func func, cl::sycl::queue &queue, int64_t n, const 
         }
         onemkl_rocblas_host_task(cgh, queue,[=](RocblasScopedContextHandler& sc) {
             auto handle = sc.get_handle(queue);
+            rocblas_set_pointer_mode(handle, rocblas_pointer_mode_device);
 
             auto x_ = reinterpret_cast<const cuDataType1 *>(x);
             auto res_ = reinterpret_cast<cuDataType2 *>(result);
             rocblas_status err;
             // NRM2 does not support negative index
             ROCBLAS_ERROR_FUNC(func, err, handle, n, x_, std::abs(incx), res_);
+            rocblas_set_pointer_mode(handle, rocblas_pointer_mode_host);
         });
     });
     return done;
