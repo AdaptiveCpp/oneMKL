@@ -28,7 +28,7 @@ get_filename_component(CBLAS_LIB_DIR ${CBLAS_file} DIRECTORY)
 find_path(CBLAS_INCLUDE cblas.h HINTS ${REF_BLAS_ROOT} PATH_SUFFIXES include)
 
 if(UNIX)
-  list(APPEND CBLAS_LINK "-lgfortran -Wl,-rpath,${CBLAS_LIB_DIR}")
+  list(APPEND CBLAS_LINK "-Wl,-rpath,${CBLAS_LIB_DIR}")
 endif()
 list(APPEND CBLAS_LINK ${CBLAS_file})
 list(APPEND CBLAS_LINK ${BLAS_file})

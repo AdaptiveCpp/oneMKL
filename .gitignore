@@ -17,7 +17,3 @@
 
 # Build
 build*/
-hipsycl-hipsycl-rocm*/*
-oneMKL-hipsycl*/*
-ustream-cmake*/
-ustream*/

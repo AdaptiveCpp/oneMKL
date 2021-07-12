@@ -86,7 +86,6 @@ inline void backend_selector_precondition<backend::rocblas>(cl::sycl::queue& que
 #ifndef ONEMKL_DISABLE_PREDICATES
     unsigned int vendor_id =
         static_cast<unsigned int>(queue.get_device().get_info<cl::sycl::info::device::vendor_id>());
-    std::cout << vendor_id << std::endl;
     if (!(queue.get_device().is_gpu() && vendor_id == AMD_ID)) {
         throw unsupported_device("",
                                  "backend_selector<backend::" + backend_map[backend::cublas] + ">",
